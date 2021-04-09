@@ -1,5 +1,4 @@
 import pygame
-import os
 import random
 from Start import *
 
@@ -28,7 +27,7 @@ def draw_timer(surface, time):
 	timer = "%s:%s" % (minutes, seconds)
 	text = font.render(timer, True, (0, 0, 0))
 	textRect = text.get_rect()
-	textRect.center = (780 ,860)
+	textRect.center = (780, 860)
 
 	surface.blit(text, textRect)
 

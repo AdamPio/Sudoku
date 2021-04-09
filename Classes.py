@@ -7,6 +7,8 @@ SCREEN_HIGH = 900
 SCREEN_WIDTH = 830
 pygame.display.set_caption("Sudoku")
 
+
+FONT_PATH_INFO = os.path.join('Fonts', "ArchitectsDaughter-Regular.ttf")
 FONT_PATH_SIGN = os.path.join("Fonts", "Bombing.ttf")
 FONT_PATH_TEXT = os.path.join("Fonts", "leaves_and_ground.ttf")
 EASY_PATH = os.path.join('data', 'Easy.txt')
