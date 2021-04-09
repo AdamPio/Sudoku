@@ -1,4 +1,3 @@
-import pygame
 from Classes import *
 
 pygame.init()
