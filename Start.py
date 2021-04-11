@@ -1,13 +1,15 @@
 from Classes import *
 
-pygame.init()
-
-# Changing diffulcty
+# View after clicking level button
+# We can change level there
 def change_level(surface, sign):
+
+	# Creating 3 buttons for 3 levels
 	easy_button = Button(surface, "Easy", 265, 250, 80, 300, FONT_PATH_TEXT, 70)
 	medium_button = Button(surface, "Medium", 265, 350, 80, 300, FONT_PATH_TEXT, 70)
 	hard_button = Button(surface, "Hard", 265, 450, 80, 300, FONT_PATH_TEXT, 70)
 	while(True):
+		# Drawing everything
 		surface.fill((255, 255, 255))
 		sign.draw_button()
 		easy_button.draw_button()
@@ -15,6 +17,7 @@ def change_level(surface, sign):
 		hard_button.draw_button()
 		pygame.display.update()
 
+		# If button is clicked level is changed and returned
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				return
@@ -26,6 +29,7 @@ def change_level(surface, sign):
 				elif hard_button.rect.collidepoint(pygame.mouse.get_pos()):
 					return 3
 
+# Function that is created to show long text with multiple lines like two below
 def blit_text(surface, text, x, y):
 	font = pygame.font.Font(FONT_PATH_INFO, 25)
 	for line in text.splitlines():
@@ -36,8 +40,10 @@ def blit_text(surface, text, x, y):
 		y += 25
 
 
+# View after clicking info button
 def info(surface, sign):
 
+	# Initializing text that will be showed and creating buttons
 	htp_text = """Sudoku is played on a grid of 9 x 9 spaces.
 	Within the rows and columns are 9 “squares”
 	(made up of 3 x 3 spaces). Each row, column and
@@ -54,11 +60,12 @@ def info(surface, sign):
 	state by clicking "Reset" button or see how computer solves
 	 it for you by clicking "Solve" button."""
 
-	htp_sign = Button(surface, "How to play", 265, 215, 80, 300, FONT_PATH_TEXT, 70)
-	info_sign = Button(surface, "Instructions", 265, 470, 80, 300, FONT_PATH_TEXT, 70)
+	htp_sign = Button(surface, "How to play", 265, 215, 80, 300, FONT_PATH_TEXT, 70, True)
+	info_sign = Button(surface, "Instructions", 265, 470, 80, 300, FONT_PATH_TEXT, 70, True)
 	back_button = Button(surface, "Back", 265, 780, 80, 300, FONT_PATH_TEXT, 70)
 
 	while(True):
+		# Drawing everything
 		surface.fill((255, 255, 255))
 		sign.draw_button()
 		htp_sign.draw_button()
@@ -66,6 +73,7 @@ def info(surface, sign):
 		info_sign.draw_button()
 		blit_text(surface, info_text, 415, 560)
 		back_button.draw_button()
+		pygame.display.update()
 
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
@@ -73,7 +81,6 @@ def info(surface, sign):
 			if event.type == pygame.MOUSEBUTTONDOWN:
 				if back_button.rect.collidepoint(pygame.mouse.get_pos()):
 					return
-		pygame.display.update()
 
 
 # START LOOP
@@ -83,7 +90,7 @@ def start():
 	surface = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HIGH))
 
 	# Creating buttons
-	sudoku_sign = Button(surface, "Sudoku", 65, 50, 150, 700, FONT_PATH_SIGN, 190)
+	sudoku_sign = Button(surface, "Sudoku", 65, 50, 150, 700, FONT_PATH_SIGN, 190, True)
 	start_button = Button(surface, "Start", 265, 250, 80, 300, FONT_PATH_TEXT, 70)
 	level_button = Button(surface, "Level: Easy", 265, 350, 80, 300, FONT_PATH_TEXT, 70)
 	info_button = Button(surface, "Info", 265, 450, 80, 300, FONT_PATH_TEXT, 70)
@@ -99,14 +106,17 @@ def start():
 		quit_button.draw_button()
 		pygame.display.update()
 
+
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				return
 			elif event.type == pygame.MOUSEBUTTONDOWN:
 				# Start button
+				# Start main game
 				if start_button.rect.collidepoint(pygame.mouse.get_pos()):
 					return level
 				# Info button
+				# Start info view
 				elif info_button.rect.collidepoint(pygame.mouse.get_pos()):
 					if info(surface, sudoku_sign):
 						return
@@ -114,9 +124,12 @@ def start():
 				elif quit_button.rect.collidepoint(pygame.mouse.get_pos()):
 					return
 				# Level button
+				# Start change level view
 				elif level_button.rect.collidepoint(pygame.mouse.get_pos()):
 					level = change_level(surface, sudoku_sign)
 					if level != None:
+						# Set string depending on number bcs it is much easier
+						# than making if statements in Button class
 						if level == 1:
 							level_button.text = "Level: Easy"
 						elif level == 2:

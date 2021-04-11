@@ -1,5 +1,6 @@
 # It's copy of the Solver class, but for the 2D list
 # We need it to get solved data without using Solver
+# for our check function in Board class
 
 def __init__(self, board):
 	self.board = board
@@ -35,27 +36,30 @@ def check(pos, value, data):
 
     return True
 
+# Solving sudoku using backtracking algorithm
 def solve(data):
+	# If we can't find empty field that means that every field was filled and board is solved
 	pos = find_empty_field(data)
 	if pos is None:
 		return True
 
 	x, y = pos
 
+	# if not we find number that fits in empty field
 	for i in range(1, 10):
 		if check(pos, i, data):
-			delay = 20
 
-			# If correct we set green color, update surface, wait for a while
-			# set back to the primary color and again wait until we set to red
+			# if number is coorect, we set value in our field to that number
 			data[x][y] = i
 
+			# And by using recursion we check next empty field
+			# if we get True (that happens only if there are not more fields to fill)
+			# we return true to every other reference and ends
 			if solve(data):
 				return True
 
-			# works same as for the correct value, but is set for color red
-			# and incorrect value
+			# If we get False that means our number was incorrect and we change value to empty field again
+			# and checking next value
 			data[x][y] = 0
-
 
 	return False
